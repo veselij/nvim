@@ -10,7 +10,6 @@ vim.opt.fileformat = "unix"
 vim.opt.foldmethod = "indent"
 vim.opt.foldlevel = 20
 vim.opt.swapfile = false
-vim.opt.hlsearch = false
 vim.opt.incsearch = true
 vim.opt.wrap = false
 
