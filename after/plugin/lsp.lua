@@ -39,6 +39,15 @@ local lsp_flags = {
 require('lspconfig')['pyright'].setup{
     on_attach = on_attach,
     flags = lsp_flags,
+    settings = {
+            python = {
+                      analysis = {
+                      autoSearchPaths = true,
+                      diagnosticMode = "openFilesOnly",
+                      useLibraryCodeForTypes = true
+                        }
+                 }
+                }
 }
 require('lspconfig')['tsserver'].setup{
     on_attach = on_attach,
@@ -49,6 +58,27 @@ require('lspconfig')['rust_analyzer'].setup{
     flags = lsp_flags,
     -- Server-specific settings...
     settings = {
-      ["rust-analyzer"] = {}
+      ["rust-analyzer"] = {
+            imports = {
+                granularity = {
+                    group = "module",
+                },
+                prefix = "self",
+            },
+            cargo = {
+                buildScripts = {
+                    enable = true,
+                },
+            },
+            procMacro = {
+                enable = true
+            },
+      }
     }
+}
+require('lspconfig')['clangd'].setup{
+        on_attach=function(client, bufnr)
+                client.resolved_capabilities.document_formatting = false
+                on_attach(client, bufnr)
+        end
 }
