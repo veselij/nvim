@@ -11,7 +11,6 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
@@ -29,7 +28,10 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+  vim.keymap.set('n', '<space>.', function() 
+          vim.lsp.buf.format {async = true} end, bufopts)
+
+
 end
 
 local lsp_flags = {
@@ -77,8 +79,9 @@ require('lspconfig')['rust_analyzer'].setup{
     }
 }
 require('lspconfig')['clangd'].setup{
-        on_attach=function(client, bufnr)
-                client.server_capabilities.documentFormattingProvider = false
-                on_attach(client, bufnr)
-        end
+    on_attach = on_attach,
+    flags = lsp_flags,
+                require("clangd_extensions.inlay_hints").setup_autocmd(),
+                require("clangd_extensions.inlay_hints").set_inlay_hints()
+
 }

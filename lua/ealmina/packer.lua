@@ -22,4 +22,5 @@ return require('packer').startup(function(use)
   use 'jose-elias-alvarez/null-ls.nvim'
   use {'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true }}
   use 'MunifTanjim/prettier.nvim'
+  use 'p00f/clangd_extensions.nvim'
 end)

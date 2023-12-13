@@ -1,25 +1,27 @@
 local null_ls = require("null-ls")
 
-local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
-local event = "BufWritePre" -- or "BufWritePost"
-local async = event == "BufWritePost"
+ local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
+ local event = "BufWritePre" -- or "BufWritePost"
+ local async = event == "BufWritePost"
 
 null_ls.setup({
     sources = {
-        require("null-ls").builtins.formatting.black,
-        require("null-ls").builtins.formatting.isort,
-        require("null-ls").builtins.formatting.clang_format,
-        require("null-ls").builtins.diagnostics.mypy,
-        require("null-ls").builtins.diagnostics.flake8,
-        require("null-ls").builtins.diagnostics.prettier,
+         require("null-ls").builtins.formatting.black,
+         require("null-ls").builtins.formatting.isort,
+         require("null-ls").builtins.diagnostics.mypy,
+         require("null-ls").builtins.diagnostics.flake8,
+         require("null-ls").builtins.diagnostics.prettier,
+         --require("null-ls").builtins.formatting.clang_format,
     },
-  on_attach = function(client, bufnr)
+    
+on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then
       vim.keymap.set("n", "<Leader>f", function()
         vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
       end, { buffer = bufnr, desc = "[lsp] format" })
 
       -- format on save
+
       vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
       vim.api.nvim_create_autocmd(event, {
         buffer = bufnr,
@@ -36,5 +38,6 @@ null_ls.setup({
         vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
       end, { buffer = bufnr, desc = "[lsp] format" })
     end
+
   end,
 })
