@@ -15,14 +15,14 @@ vim.opt.wrap = true
 vim.opt.wildmenu = true
 vim.opt.termguicolors = true
 vim.opt.backup = false
-vim.wo.colorcolumn = '120'
-vim.opt.path:prepend('**')
+vim.wo.colorcolumn = "120"
+vim.opt.path:prepend("**")
 vim.opt.cursorline = true
 
 -- vim.g.netrw_banner = false
 vim.g.netrw_liststyle = 3
 vim.g.netrw_browse_split = 3
-vim.g.mapleader = ' '
+vim.g.mapleader = " "
 
 -- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 -- delays and poor user experience.
