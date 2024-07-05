@@ -79,7 +79,7 @@ lspconfig.pyright.setup({
 	},
 	capabilities = capabilities,
 })
-
+lspconfig.tsserver.setup({})
 lspconfig.ruff_lsp.setup({
 	on_attach = on_attach,
 	init_options = {
