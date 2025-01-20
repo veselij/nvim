@@ -10,8 +10,6 @@ cmp.setup({
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
 			else
 				fallback()
 			end
@@ -32,6 +30,6 @@ cmp.setup({
 	}),
 })
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-require("lspconfig")["pyright"].setup({
+require("lspconfig")["ruff"].setup({
 	capabilities = capabilities,
 })
