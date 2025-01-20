@@ -19,11 +19,22 @@ lspconfig.pyright.setup({
 	on_attach = on_attach,
 	settings = {
 		python = {
+			disableOrganizeImports = true,
 			analysis = {
 				autoSearchPaths = true,
 				diagnosticMode = "openFilesOnly",
 				useLibraryCodeForTypes = true,
 			},
+		},
+	},
+	capabilities = capabilities,
+})
+lspconfig.tsserver.setup({})
+lspconfig.ruff_lsp.setup({
+	on_attach = on_attach,
+	init_options = {
+		settings = {
+			args = {},
 		},
 	},
 })
