@@ -8,7 +8,7 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 	vim.keymap.set("n", "<space>.", function()
-		vim.lsp.buf.format({ async = true })
+    vim.lsp.buf.format({ async = true })
 	end, bufopts)
 end
 
@@ -29,16 +29,9 @@ lspconfig.pyright.setup({
 	},
 	capabilities = capabilities,
 })
+
+
 lspconfig.tsserver.setup({})
-lspconfig.ruff_lsp.setup({
-	on_attach = on_attach,
-	init_options = {
-		settings = {
-			args = {},
-		},
-	},
-})
---lspconfig.tsserver.setup({})
 --
 --
 -- Configure `ruff-lsp`.
