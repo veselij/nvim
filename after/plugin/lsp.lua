@@ -1,52 +1,43 @@
-local on_attach = function(client, bufnr)
-	-- Mappings.
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	local bufopts = { noremap = true, silent = true, buffer = bufnr }
-    vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-	vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
-	vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
-	vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-	vim.keymap.set("n", "<space>.", function()
-    vim.lsp.buf.format({ async = true })
-	end, bufopts)
-end
+vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(ev)
+                local client = vim.lsp.get_client_by_id(ev.data.client_id)
+                if client:supports_method('textDocument/completion') then
+                        vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+                end
 
-local lspconfig = require("lspconfig")
+                if not client:supports_method('textDocument/willSaveWaitUntil')
+                    and client:supports_method('textDocument/formatting') then
+                        vim.api.nvim_create_autocmd('BufWritePre', {
+                                buffer = ev.buf,
+                                callback = function()
+                                        vim.lsp.buf.format({ bufnr = ev.buf, id = client.id, timeout_ms = 1000 })
+                                end,
+                        })
+                end
+        end,
+})
 
-lspconfig.pyright.setup({
-	-- Server-specific settings. See `:help lspconfig-setup`
-	on_attach = on_attach,
-	settings = {
-		python = {
-			disableOrganizeImports = true,
-			analysis = {
-				autoSearchPaths = true,
-				diagnosticMode = "openFilesOnly",
-				useLibraryCodeForTypes = true,
-			},
-		},
-	},
-	capabilities = capabilities,
+vim.lsp.enable({ 'pyright', 'lua-language-server', 'ruff', 'rust_analyzer' })
+vim.o.winborder = 'rounded'
+vim.diagnostic.config({
+        virtual_lines = true,
 })
 
 
-lspconfig.tsserver.setup({})
---
---
--- Configure `ruff-lsp`.
--- See: https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#ruff_lsp
--- For the default config, along with instructions on how to customize the settings
-lspconfig.ruff.setup {
-  on_attach = on_attach,
-  init_options = {
-    settings = {
-      -- Any extra CLI arguments for `ruff` go here.
-      args = {},
-    }
-  }
+---[[AUTOCOMPLETION SETUP
+vim.o.completeopt = "menu,noinsert,popup,fuzzy"
+
+---[[ Setup keymaps so we can accept completion using Enter and choose items using arrow keys or Tab.
+local pumMaps = {
+        ['<Tab>'] = '<C-n>',
+        ['<S-Tab>'] = '<C-p>',
+        ['<Down>'] = '<C-n>',
+        ['<Up>'] = '<C-p>',
+        ['<CR>'] = '<C-y>',
 }
-
-lspconfig.rust_analyzer.setup({
-    on_attach = on_attach
-})
+for insertKmap, pumKmap in pairs(pumMaps) do
+        vim.keymap.set('i', insertKmap, function()
+                return vim.fn.pumvisible() == 1 and pumKmap or insertKmap
+        end, { expr = true })
+end
+---]]
