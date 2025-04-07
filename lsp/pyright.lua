@@ -15,6 +15,8 @@ return {
                                 useLibraryCodeForTypes = true,
                                 autoImportCompletions = true,
                         },
+                        pythonPath = ".venv/bin/python3",
                 },
+
         },
 }
