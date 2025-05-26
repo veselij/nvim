@@ -14,8 +14,10 @@ return {
                                 autoSearchPaths = true,
                                 useLibraryCodeForTypes = true,
                                 autoImportCompletions = true,
+
                         },
                         pythonPath = ".venv/bin/python3",
+                        disableOrganizeImports = true,
                 },
 
         },
