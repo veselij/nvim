@@ -9,7 +9,7 @@ vim.diagnostic.config({
 
 
 ---[[AUTOCOMPLETION SETUP
-vim.o.completeopt = "menu,noinsert,popup,fuzzy"
+--vim.o.completeopt = "menu,noinsert,popup,fuzzy"
 
 vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)

@@ -1,2 +1,1 @@
-vim.g.ayucolor="dark"
-vim.cmd("colorscheme ayu")
+vim.cmd("colorscheme gruvbox")
