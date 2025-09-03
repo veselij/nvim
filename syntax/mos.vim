@@ -16,11 +16,7 @@ let b:current_syntax = "cel"
 hi moshell guifg=Red ctermfg=Red term=bold
 hi moshell_set guifg=Blue ctermfg=Blue term=bold
 hi moshell_code guifg=Green ctermfg=Green term=bold
-hi moshell_if guifg=Yellow ctermfg=Yellow term=bold
-hi moshell_func guifg=Brown ctermfg=Brown term=bold
+hi moshell_if guifg=Yellow ctermfg=Yellow guibg=Gray term=bold
+hi moshell_func guifg=Brown ctermfg=Brown guibg=Gray term=bold
 hi moshellParam guifg=Magenta ctermfg=Magenta term=bold
 hi lineComment guifg=Gray ctermfg=Gray term=italic
-
-
-
-
