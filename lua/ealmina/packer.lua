@@ -5,7 +5,7 @@ vim.cmd([[packadd packer.nvim]])
 
 return require("packer").startup(function(use)
         use("wbthomason/packer.nvim")
-        use("ayu-theme/ayu-vim")
+        use("ellisonleao/gruvbox.nvim")
         use("dominikduda/vim_current_word")
         use("windwp/nvim-autopairs")
 end)

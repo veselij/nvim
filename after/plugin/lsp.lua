@@ -10,7 +10,6 @@ vim.diagnostic.config({
 
 ---[[AUTOCOMPLETION SETUP
 vim.o.completeopt = "menu,noinsert,popup,fuzzy"
-
 vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
                 local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
@@ -27,6 +26,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
                                 end,
                         })
                 end
+                vim.lsp.completion.enable(false, client.id, args.buf)
         end,
 })
 
