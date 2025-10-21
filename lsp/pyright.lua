@@ -16,7 +16,7 @@ return {
                                 autoImportCompletions = true,
 
                         },
-                        pythonPath = ".venv/bin/python3",
+                        pythonPath = "./.venv/bin/python3",
                         disableOrganizeImports = true,
                 },
 
