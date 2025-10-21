@@ -41,7 +41,7 @@ vim.keymap.set('n', '<leader>d', ':bd<CR>')
 
 local pick = require('mini.pick')
 pick.setup({ source = { show = pick.default_show } })
-require "oil".setup({columns={}})
+require "oil".setup({ columns = {} })
 vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
 vim.keymap.set('n', '<leader>g', ":Pick grep<CR>")
 vim.keymap.set('n', '<leader>e', ":Oil<CR>")
@@ -56,23 +56,65 @@ vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
                 local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
                 if client:supports_method('textDocument/completion') then
-                        vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+                        vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = false })
                 end
         end,
 })
 
---vim.o.completeopt = "menu,longest"
-vim.cmd("set completeopt=menu,longest")
+vim.api.nvim_create_autocmd('LspAttach', {
+        desc = 'Enable inlay hints',
+        callback = function(event)
+                local id = vim.tbl_get(event, 'data', 'client_id')
+                local client = id and vim.lsp.get_client_by_id(id)
+                if client == nil or not client:supports_method('textDocument/inlayHint') then
+                        return
+                end
 
-local pumMaps = {
-        ['<Tab>'] = '<C-n>',
-        ['<S-Tab>'] = '<C-p>',
-        ['<Down>'] = '<C-n>',
-        ['<Up>'] = '<C-p>',
-        ['<CR>'] = '<C-y>',
-}
-for insertKmap, pumKmap in pairs(pumMaps) do
-        vim.keymap.set('i', insertKmap, function()
-                return vim.fn.pumvisible() == 1 and pumKmap or insertKmap
-        end, { expr = true })
+                vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+        end,
+
+})
+
+vim.opt.completeopt = { 'menu', 'fuzzy' }
+vim.opt.shortmess:append('c')
+
+local function tab_complete()
+        if vim.fn.pumvisible() == 1 then
+                -- navigate to next item in completion menu
+                return '<Down>'
+        end
+
+        local c = vim.fn.col('.') - 1
+        local is_whitespace = c == 0 or vim.fn.getline('.'):sub(c, c):match('%s')
+
+
+        if is_whitespace then
+                -- insert tab
+                return '<Tab>'
+        end
+
+        local lsp_completion = vim.bo.omnifunc == 'v:lua.vim.lsp.omnifunc'
+
+        if lsp_completion then
+                -- trigger lsp code completion
+                return '<C-x><C-o>'
+        end
+
+        -- suggest words in current buffer
+        return '<C-x><C-n>'
 end
+
+
+local function tab_prev()
+        if vim.fn.pumvisible() == 1 then
+                -- navigate to previous item in completion menu
+                return '<Up>'
+        end
+
+        -- insert tab
+
+        return '<Tab>'
+end
+
+vim.keymap.set('i', '<Tab>', tab_complete, { expr = true })
+vim.keymap.set('i', '<S-Tab>', tab_prev, { expr = true })
