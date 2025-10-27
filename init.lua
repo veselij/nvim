@@ -75,7 +75,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 })
 
-vim.opt.completeopt = { 'menu', 'fuzzy' }
+vim.opt.completeopt = { 'menu', 'longest', 'preinsert', 'preview', 'popup' }
 vim.opt.shortmess:append('c')
 
 local function tab_complete()
