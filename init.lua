@@ -24,8 +24,7 @@ vim.o.swapfile = false
 vim.o.incsearch = true
 vim.o.winborder = "rounded"
 vim.o.signcolumn = "yes"
-
-
+vim.o.spell = true
 
 vim.wo.colorcolumn = "120"
 vim.g.mapleader = " "
@@ -46,6 +45,12 @@ vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
 vim.keymap.set('n', '<leader>g', ":Pick grep<CR>")
 vim.keymap.set('n', '<leader>e', ":Oil<CR>")
 
+
+local function togle_diagnostic()
+        vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end
+
+vim.keymap.set('n', '<leader>td', togle_diagnostic)
 vim.cmd("colorscheme gruvbox")
 vim.cmd(":hi statusline guibg=None")
 
