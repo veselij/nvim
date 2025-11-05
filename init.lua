@@ -15,6 +15,7 @@ vim.o.wrap = false
 vim.o.encoding = "utf-8"
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
 vim.o.expandtab = true
 vim.o.autoindent = true
 vim.o.fileformat = "unix"
@@ -24,7 +25,6 @@ vim.o.swapfile = false
 vim.o.incsearch = true
 vim.o.winborder = "rounded"
 vim.o.signcolumn = "yes"
-vim.o.spell = true
 
 vim.wo.colorcolumn = "120"
 vim.g.mapleader = " "
@@ -49,8 +49,13 @@ vim.keymap.set('n', '<leader>e', ":Oil<CR>")
 local function togle_diagnostic()
         vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end
-
 vim.keymap.set('n', '<leader>td', togle_diagnostic)
+
+local function togle_spelling()
+        vim.o.spell = not vim.o.spell
+end
+vim.keymap.set('n', '<leader>ts', togle_spelling)
+
 vim.cmd("colorscheme gruvbox")
 vim.cmd(":hi statusline guibg=None")
 
