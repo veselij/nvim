@@ -84,6 +84,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end,
 
 })
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true })
 
 vim.opt.completeopt = { 'menu', 'longest', 'preinsert', 'preview', 'popup' }
 vim.opt.shortmess:append('c')
