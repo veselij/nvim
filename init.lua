@@ -44,7 +44,7 @@ require "oil".setup({ columns = {} })
 vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
 vim.keymap.set('n', '<leader>g', ":Pick grep<CR>")
 vim.keymap.set('n', '<leader>e', ":Oil<CR>")
-vim.keymap.set('n', '<leader>b', ":Pick buffers")
+vim.keymap.set('n', '<leader>b', ":Pick buffers<CR>")
 
 
 local function togle_diagnostic()
