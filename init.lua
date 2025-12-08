@@ -42,9 +42,12 @@ local pick = require('mini.pick')
 pick.setup({ source = { show = pick.default_show } })
 require "oil".setup({ columns = {} })
 vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
-vim.keymap.set('n', '<leader>g', ":Pick grep<CR>")
+vim.keymap.set('n', '<leader>g', ":Pick grep_live<CR>")
 vim.keymap.set('n', '<leader>e', ":Oil<CR>")
 vim.keymap.set('n', '<leader>b', ":Pick buffers<CR>")
+
+vim.keymap.set('n', '<leader>v', ":vsplit<CR>")
+vim.keymap.set('n', '<leader>s', ":split<CR>")
 
 
 local function togle_diagnostic()
