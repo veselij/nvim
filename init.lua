@@ -7,6 +7,7 @@ require("packer").startup(function(use)
     use("windwp/nvim-autopairs")
     use("echasnovski/mini.pick")
     use("stevearc/oil.nvim")
+    use("gustafj/vim-ttcn")
 end)
 
 vim.o.number = true
@@ -66,7 +67,7 @@ require("gruvbox").setup({
 vim.cmd("colorscheme gruvbox")
 vim.cmd(":hi statusline guibg=None")
 
-vim.lsp.enable({ 'pyright', 'lua-language-server', 'ruff', 'rust_analyzer', 'typescript' })
+vim.lsp.enable({ 'pyright', 'lua-language-server', 'ruff', 'rust_analyzer', 'typescript', 'ttcn' })
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
 
 vim.api.nvim_create_autocmd('LspAttach', {
