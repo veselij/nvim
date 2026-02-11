@@ -46,6 +46,9 @@ vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
 vim.keymap.set('n', '<leader>g', ":Pick grep_live<CR>")
 vim.keymap.set('n', '<leader>e', ":Oil<CR>")
 vim.keymap.set('n', '<leader>b', ":Pick buffers<CR>")
+vim.keymap.set('n', '<leader>v', ":vsplit<CR>")
+vim.keymap.set('n', '<leader>s', ":split<CR>")
+
 
 vim.keymap.set('n', '<leader>v', ":vsplit<CR>")
 vim.keymap.set('n', '<leader>s', ":split<CR>")
